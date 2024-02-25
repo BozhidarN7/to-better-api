@@ -18,6 +18,9 @@
       "plugins": ["@graphql-eslint"],
       "rules": {
         "@graphql-eslint/known-type-names": "error"
+      },
+      "parserOptions": {
+        "schema": "./**/*.graphql"
       }
     }
   ],
@@ -27,5 +30,6 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"]
-  }
+  },
+  "ignorePatterns": ["dist/**"]
 }

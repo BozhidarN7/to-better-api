@@ -2,28 +2,9 @@ import { ApolloServer } from '@apollo/server';
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import gql from 'graphql-tag';
+import { readFileSync } from 'fs';
 
-type User = {
-  id: string;
-  username: string;
-};
-
-const typeDefs = gql`
-  extend schema
-    @link(
-      url: "https://specs.apollo.dev/federation/v2.0"
-      import: ["@key", "@shareable"]
-    )
-
-  type Query {
-    me: User
-  }
-
-  type User @key(fields: "id") {
-    id: ID!
-    username: String
-  }
-`;
+const typeDefs = gql(readFileSync('./tasks.graphql', { encoding: 'utf-8' }));
 
 const books = [
   {
@@ -38,17 +19,7 @@ const books = [
 
 const resolvers = {
   Query: {
-    me() {
-      return { id: '1', username: '@ava' };
-    },
-  },
-  User: {
-    __resolveReference(
-      user: User,
-      { fetchUserById }: { fetchUserById: (id: string) => User },
-    ) {
-      return fetchUserById(user.id);
-    },
+    books: () => books,
   },
 };
 // The ApolloServer constructor requires two parameters: your schema
