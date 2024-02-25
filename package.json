@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc",
+    "lint": "npx eslint .",
+    "lint:fix": "npm run lint -- --fix",
     "start": "npm run compile && nodemon ./dist/index.js"
   },
   "keywords": [],
@@ -17,8 +19,12 @@
     "graphql": "^16.8.1"
   },
   "devDependencies": {
+    "@graphql-eslint/eslint-plugin": "^3.20.1",
     "@types/node": "^20.11.20",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.57.0",
     "typescript": "^5.3.3"
   },
   "config": {
