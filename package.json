@@ -12,6 +12,8 @@
     "prettier:fix": "npx prettier . --write",
     "format": "npm run prettier:fix && npm run lint:fix",
     "start": "npm run compile && nodemon ./dist/index.js",
+    "supergraph:composition": "rover supergraph compose --config ./supergraph-config.yaml --output ./router/supergraph.graphql",
+    "router:start": "npm run supergraph:composition && ./router/router --supergraph=./router/supergraph.graphql",
     "prepare": "husky"
   },
   "keywords": [],
@@ -20,7 +22,9 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.10.0",
-    "graphql": "^16.8.1"
+    "@apollo/subgraph": "^2.7.1",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6"
   },
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "^3.20.1",

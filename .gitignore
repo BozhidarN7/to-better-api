@@ -1,6 +1,9 @@
 # Ignore the compiled output.
 dist/
 
+# Ignore the router folder
+router/
+
 # TypeScript incremental compilation cache
 *.tsbuildinfo
 

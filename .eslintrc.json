@@ -11,6 +11,7 @@
     "sourceType": "module"
   },
   "overrides": [
+    { "files": ["*.ts"], "processor": "@graphql-eslint/graphql" },
     {
       "files": ["*.graphql"],
       "parser": "@graphql-eslint/eslint-plugin",
