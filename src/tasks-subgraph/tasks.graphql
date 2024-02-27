@@ -3,11 +3,54 @@ extend schema
     url: "https://specs.apollo.dev/federation/v2.0"
     import: ["@key", "@shareable"]
   )
+
 type Query {
-  books: [Book]
+  weeks: [Week!]!
 }
 
-type Book {
-  title: String
-  author: String
+type Week {
+  id: ID!
+  sevenDaysPeriod: SevenDaysPeriod!
+  totalTasks: Int!
+  tasksCompleted: Int!
+  tasks: DaysOfTheWeek!
+}
+
+type DaysOfTheWeek {
+  monday: [Task!]!
+  tuesday: [Task!]!
+  wednesday: [Task!]!
+  thursday: [Task!]!
+  friday: [Task!]!
+  saturday: [Task!]!
+  sunday: [Task!]!
+}
+
+type SevenDaysPeriod {
+  startDate: String!
+  endDate: String!
+}
+
+type Task {
+  id: ID!
+  title: String!
+  description: String
+  priority: Priority!
+  category: Category!
+  isCompleted: Boolean!
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  VERY_HIGH
+}
+
+enum Category {
+  HOME
+  OUTDOOR
+  SHOPPING
+  TRAINING
+  LEARNING
 }
