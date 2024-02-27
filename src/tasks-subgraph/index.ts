@@ -3,13 +3,23 @@ import { buildSubgraphSchema } from '@apollo/subgraph';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import gql from 'graphql-tag';
 import { readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
-const typeDefs = gql(readFileSync('./tasks.graphql', { encoding: 'utf-8' }));
+const typeDefs = gql(
+  readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'tasks.graphql'), {
+    encoding: 'utf-8',
+  }),
+);
 
 const books = [
   {
     title: 'The Awakening',
     author: 'Kate Chopin',
+  },
+  {
+    title: 'City of Glass',
+    author: 'Paul Auster',
   },
   {
     title: 'City of Glass',
