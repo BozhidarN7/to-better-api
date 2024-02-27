@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import { readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
+import { tasksData } from './mock';
 
 const typeDefs = gql(
   readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'tasks.graphql'), {
@@ -12,24 +13,9 @@ const typeDefs = gql(
   }),
 );
 
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
-
 const resolvers = {
   Query: {
-    books: () => books,
+    weeks: () => tasksData,
   },
 };
 // The ApolloServer constructor requires two parameters: your schema
