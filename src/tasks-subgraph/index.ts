@@ -10,12 +10,14 @@ import { tasksData } from './mock';
 const typeDefs = gql(
   readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'tasks.graphql'), {
     encoding: 'utf-8',
-  }),
+  })
 );
 
 const resolvers = {
   Query: {
     weeks: () => tasksData,
+    weeksById: (parent, { id }: { id: string }) =>
+      tasksData.find((week) => week.id),
   },
 };
 // The ApolloServer constructor requires two parameters: your schema
