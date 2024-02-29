@@ -16,8 +16,8 @@ const typeDefs = gql(
 const resolvers = {
   Query: {
     weeks: () => tasksData,
-    weeksById: (parent, { id }: { id: string }) =>
-      tasksData.find((week) => week.id),
+    week: (_: undefined, { weekId }: { weekId: string }) =>
+      tasksData.find((week) => week.id === weekId),
   },
 };
 // The ApolloServer constructor requires two parameters: your schema
