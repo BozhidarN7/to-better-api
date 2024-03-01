@@ -9,6 +9,14 @@ type Query {
   week(weekId: ID!): Week
 }
 
+type Mutation {
+  deleteTask(
+    weekId: ID
+    day: DayOfWeek
+    taskId: ID
+  ): DeleteTaskMutationResponse!
+}
+
 type Week {
   id: ID!
   sevenDaysPeriod: SevenDaysPeriod!
@@ -30,6 +38,19 @@ type DaysOfTheWeek {
 type SevenDaysPeriod {
   startDate: String!
   endDate: String!
+}
+
+interface MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+}
+
+interface DeleteTaskMutationResponse implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  task: Task
 }
 
 type Task {
@@ -54,4 +75,14 @@ enum Category {
   SHOPPING
   TRAINING
   LEARNING
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
 }
