@@ -65,7 +65,7 @@ const resolvers = {
         taskToDeleteIndex,
         1
       );
-      console.log(deletedTask[0]);
+
       return {
         success: true,
         message: 'Task deleted successfully',

@@ -46,7 +46,7 @@ interface MutationResponse {
   message: String!
 }
 
-interface DeleteTaskMutationResponse implements MutationResponse {
+type DeleteTaskMutationResponse implements MutationResponse {
   code: String!
   success: Boolean!
   message: String!
