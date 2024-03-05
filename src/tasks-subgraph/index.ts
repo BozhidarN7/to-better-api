@@ -11,7 +11,7 @@ import { DayOfWeek } from './types';
 const typeDefs = gql(
   readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'tasks.graphql'), {
     encoding: 'utf-8',
-  }),
+  })
 );
 
 const resolvers = {
@@ -27,10 +27,10 @@ const resolvers = {
         weekId,
         day,
         taskId,
-      }: { weekId: string; day: DayOfWeek; taskId: string },
+      }: { weekId: string; day: DayOfWeek; taskId: string }
     ) {
       const weeklyTasks = tasksData.find(
-        (weeklyTasks) => weeklyTasks.id === weekId,
+        (weeklyTasks) => weeklyTasks.id === weekId
       );
 
       if (!weeklyTasks) {
@@ -45,7 +45,7 @@ const resolvers = {
       const dayToLowerCase = day.toLowerCase() as DayOfWeek;
 
       const taskToDeleteIndex = weeklyTasks.tasks[dayToLowerCase].findIndex(
-        (task) => task.id === taskId,
+        (task) => task.id === taskId
       );
 
       if (taskToDeleteIndex === -1) {
@@ -63,7 +63,7 @@ const resolvers = {
       weeklyTasks.totalTasks -= 1;
       const deletedTask = weeklyTasks.tasks[dayToLowerCase].splice(
         taskToDeleteIndex,
-        1,
+        1
       );
 
       return {
@@ -75,16 +75,11 @@ const resolvers = {
     },
   },
 };
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
+
 const server = new ApolloServer({
   schema: buildSubgraphSchema([{ typeDefs, resolvers }]),
 });
 
-// Passing an ApolloServer instance to the `startStandaloneServer` function:
-//  1. creates an Express app
-//  2. installs your ApolloServer instance as middleware
-//  3. prepares your app to handle incoming requests
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4001 },
 });
