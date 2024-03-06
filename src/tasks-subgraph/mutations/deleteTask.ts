@@ -3,10 +3,10 @@ import { DayOfWeek } from '../types';
 
 export default function deleteTask(
   _: undefined,
-  { weekId, day, taskId }: { weekId: string; day: DayOfWeek; taskId: string }
+  { weekId, day, taskId }: { weekId: string; day: DayOfWeek; taskId: string },
 ) {
   const weeklyTasks = tasksData.find(
-    (weeklyTasks) => weeklyTasks.id === weekId
+    (weeklyTasks) => weeklyTasks.id === weekId,
   );
 
   if (!weeklyTasks) {
@@ -21,7 +21,7 @@ export default function deleteTask(
   const dayToLowerCase = day.toLowerCase() as DayOfWeek;
 
   const taskToDeleteIndex = weeklyTasks.tasks[dayToLowerCase].findIndex(
-    (task) => task.id === taskId
+    (task) => task.id === taskId,
   );
 
   if (taskToDeleteIndex === -1) {
@@ -39,7 +39,7 @@ export default function deleteTask(
   weeklyTasks.totalTasks -= 1;
   const deletedTask = weeklyTasks.tasks[dayToLowerCase].splice(
     taskToDeleteIndex,
-    1
+    1,
   );
 
   return {

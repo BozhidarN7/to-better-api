@@ -5,21 +5,17 @@ import gql from 'graphql-tag';
 import { readFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import { tasksData } from './mock';
 import mutations from './mutations/mutations';
+import queries from './queries/queries';
 
 const typeDefs = gql(
   readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'tasks.graphql'), {
     encoding: 'utf-8',
-  })
+  }),
 );
 
 const resolvers = {
-  Query: {
-    weeks: () => tasksData,
-    week: (_: undefined, { weekId }: { weekId: string }) =>
-      tasksData.find((week) => week.id === weekId),
-  },
+  Query: queries,
   Mutation: mutations,
 };
 
