@@ -15,6 +15,11 @@ type Mutation {
     day: DayOfWeek
     taskId: ID
   ): DeleteTaskMutationResponse!
+  createTask(
+    weekId: ID!
+    dayOfWeek: DayOfWeek!
+    task: TaskInput!
+  ): CreateTaskMutationResponse!
 }
 
 type Week {
@@ -53,6 +58,13 @@ type DeleteTaskMutationResponse implements MutationResponse {
   task: Task
 }
 
+type CreateTaskMutationResponse implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  task: Task
+}
+
 type Task {
   id: ID!
   title: String!
@@ -60,6 +72,13 @@ type Task {
   priority: Priority!
   category: Category!
   isCompleted: Boolean!
+}
+
+input TaskInput {
+  title: String!
+  description: String
+  priority: Priority!
+  category: Category!
 }
 
 enum Priority {

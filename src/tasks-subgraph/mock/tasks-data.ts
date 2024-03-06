@@ -1,4 +1,26 @@
-const tasksState = [
+import { Categories, Priorities } from '../enums';
+import { Task } from '../types';
+
+interface Week {
+  id: string;
+  sevenDaysPeriod: {
+    startDate: string;
+    endDate: string;
+  };
+  totalTasks: number;
+  tasksCompleted: number;
+  tasks: {
+    monday: Task[];
+    tuesday: Task[];
+    wednesday: Task[];
+    thursday: Task[];
+    friday: Task[];
+    saturday: Task[];
+    sunday: Task[];
+  };
+}
+
+const tasksState: Week[] = [
   {
     id: 'week1',
     sevenDaysPeriod: {
@@ -17,24 +39,24 @@ const tasksState = [
           id: 'task1',
           title: 'Clean the dishes',
           description: 'All of them',
-          category: 'home',
-          priority: 'medium',
+          category: Categories.Home,
+          priority: Priorities.Medium,
           isCompleted: true,
         },
         {
           id: 'task2',
           title: 'Workout',
           description: 'Run 5 km',
-          category: 'outdoor',
-          priority: 'high',
+          category: Categories.Outdoor,
+          priority: Priorities.High,
           isCompleted: true,
         },
         {
           id: 'task3',
           title: 'Lear about React Native',
           description: 'Investigate native modules',
-          category: 'learning',
-          priority: 'medium',
+          category: Categories.Learning,
+          priority: Priorities.Medium,
           isCompleted: false,
         },
       ],
@@ -58,8 +80,8 @@ const tasksState = [
           title: 'Fix the doors',
           description:
             'Two of the doors have problems with the closing Two of the doors have problems with the closing',
-          category: 'home',
-          priority: 'medium',
+          category: Categories.Home,
+          priority: Priorities.Medium,
           isCompleted: false,
         },
       ],
