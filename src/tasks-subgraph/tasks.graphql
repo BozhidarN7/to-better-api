@@ -26,6 +26,10 @@ type Mutation {
     taskId: ID!
     task: EditTaskInput!
   ): CreateEditTaskMutationResponse!
+  updateTotalTasksCompleted(
+    weekId: ID!
+    increase: Boolean
+  ): UpdateTotlaTasksCompletedResponse!
 }
 
 type Week {
@@ -69,6 +73,13 @@ type CreateEditTaskMutationResponse implements MutationResponse {
   success: Boolean!
   message: String!
   task: Task
+}
+
+type UpdateTotlaTasksCompletedResponse implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  week: Week
 }
 
 type Task {
