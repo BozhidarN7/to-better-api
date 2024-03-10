@@ -8,7 +8,7 @@ export default function createTask(
   const { weekId, dayOfWeek, task } = args;
 
   const weeklyTasks = tasksData.find(
-    (weeklyTasks) => weeklyTasks.id === weekId,
+    (weeklyTasks) => weeklyTasks._id === weekId,
   );
 
   if (!weeklyTasks) {
@@ -22,7 +22,7 @@ export default function createTask(
 
   const dayToLowerCase = dayOfWeek.toLowerCase() as DayOfWeek;
 
-  const newTask = { ...task, id: 'task1', isCompleted: false };
+  const newTask = { ...task, _id: 'task1', isCompleted: false };
   weeklyTasks.tasks[dayToLowerCase].push(newTask);
   weeklyTasks.totalTasks += 1;
 

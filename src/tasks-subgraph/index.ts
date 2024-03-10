@@ -7,6 +7,7 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import mutations from './mutations/mutations';
 import queries from './queries/queries';
+import client from '../db/mongodb-client';
 
 const typeDefs = gql(
   readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'tasks.graphql'), {
@@ -25,6 +26,12 @@ const server = new ApolloServer({
 
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4001 },
+  context: async () => {
+    const toBetterDB = client.db('to-better');
+    return {
+      db: toBetterDB,
+    };
+  },
 });
 
 console.log(`🚀  Server ready at: ${url}`);

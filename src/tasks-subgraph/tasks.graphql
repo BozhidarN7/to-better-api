@@ -33,7 +33,7 @@ type Mutation {
 }
 
 type Week {
-  id: ID!
+  _id: ID!
   sevenDaysPeriod: SevenDaysPeriod!
   totalTasks: Int!
   tasksCompleted: Int!
@@ -83,7 +83,7 @@ type UpdateTotlaTasksCompletedResponse implements MutationResponse {
 }
 
 type Task {
-  id: ID!
+  _id: ID!
   title: String!
   description: String
   priority: Priority!

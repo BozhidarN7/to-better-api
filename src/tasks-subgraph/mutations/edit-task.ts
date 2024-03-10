@@ -7,7 +7,7 @@ export default function editTask(
 ) {
   const { task, weekId, taskId, dayOfWeek } = args;
   const weeklyTasks = tasksData.find(
-    (weeklyTasks) => weeklyTasks.id === weekId,
+    (weeklyTasks) => weeklyTasks._id === weekId,
   );
 
   if (!weeklyTasks) {
@@ -22,7 +22,7 @@ export default function editTask(
   const dayToLowerCase = dayOfWeek.toLowerCase() as DayOfWeek;
 
   const taskToEditIndex = weeklyTasks.tasks[dayToLowerCase].findIndex(
-    (task: Task) => task.id === taskId,
+    (task: Task) => task._id === taskId,
   );
 
   if (taskToEditIndex === -1) {

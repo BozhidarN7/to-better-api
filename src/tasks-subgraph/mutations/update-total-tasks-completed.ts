@@ -6,7 +6,7 @@ export default function updateTotalTasksCompleted(
 ) {
   const { weekId, increase } = args;
   const weeklyTasks = tasksState.find(
-    (weeklyTasks) => weeklyTasks.id === weekId,
+    (weeklyTasks) => weeklyTasks._id === weekId,
   );
 
   if (!weeklyTasks) {

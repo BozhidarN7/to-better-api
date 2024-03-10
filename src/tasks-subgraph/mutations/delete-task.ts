@@ -6,7 +6,7 @@ export default function deleteTask(
   { weekId, day, taskId }: { weekId: string; day: DayOfWeek; taskId: string },
 ) {
   const weeklyTasks = tasksData.find(
-    (weeklyTasks) => weeklyTasks.id === weekId,
+    (weeklyTasks) => weeklyTasks._id === weekId,
   );
 
   if (!weeklyTasks) {
@@ -21,7 +21,7 @@ export default function deleteTask(
   const dayToLowerCase = day.toLowerCase() as DayOfWeek;
 
   const taskToDeleteIndex = weeklyTasks.tasks[dayToLowerCase].findIndex(
-    (task) => task.id === taskId,
+    (task) => task._id === taskId,
   );
 
   if (taskToDeleteIndex === -1) {
