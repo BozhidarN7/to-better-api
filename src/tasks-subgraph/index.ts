@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import mutations from './mutations/mutations';
 import queries from './queries/queries';
 import client from '../db/mongodb-client';
+import { Task, Week } from './types';
 
 const typeDefs = gql(
   readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'tasks.graphql'), {
@@ -28,8 +29,11 @@ const { url } = await startStandaloneServer(server, {
   listen: { port: 4001 },
   context: async () => {
     const toBetterDB = client.db('to-better');
+    const tasksCollection = toBetterDB.collection<Task>('tasks');
+    const weeksCollection = toBetterDB.collection<Week>('weeks');
     return {
-      db: toBetterDB,
+      tasks: tasksCollection,
+      weeks: weeksCollection,
     };
   },
 });
