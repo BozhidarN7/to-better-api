@@ -89,6 +89,8 @@ type Task {
   priority: Priority!
   category: Category!
   isCompleted: Boolean!
+  dayOfWeek: DayOfWeek!
+  weekId: ID!
 }
 
 input CreateTaskInput {
