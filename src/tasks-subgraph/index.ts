@@ -1,6 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import 'dotenv/config';
 import gql from 'graphql-tag';
 import { readFileSync } from 'fs';
 import { dirname, join } from 'path';
