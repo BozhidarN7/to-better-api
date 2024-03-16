@@ -1,15 +1,23 @@
-import tasksState from '../mock/tasks-data';
+import { Collection, ObjectId } from 'mongodb';
+import { Week } from '../types';
+import { populateTasksInDaysOfWeek } from '../../db/tasks-pipeline-steps';
 
-export default function updateTotalTasksCompleted(
+export default async function updateTotalTasksCompleted(
   _: undefined,
   args: { weekId: string; increase: boolean },
+  { weeks }: { weeks: Collection<Week> },
 ) {
   const { weekId, increase } = args;
-  const weeklyTasks = tasksState.find(
-    (weeklyTasks) => weeklyTasks._id === weekId,
-  );
 
-  if (!weeklyTasks) {
+  const filter = { _id: new ObjectId(weekId) };
+  const update = {
+    $inc: {
+      tasksCompleted: increase ? 1 : -1,
+    },
+  };
+  const updateStatus = await weeks.updateOne(filter, update);
+
+  if (updateStatus.modifiedCount === 0) {
     return {
       success: false,
       message: 'Week not found',
@@ -18,16 +26,19 @@ export default function updateTotalTasksCompleted(
     };
   }
 
-  if (increase) {
-    weeklyTasks.tasksCompleted += 1;
-  } else {
-    weeklyTasks.tasksCompleted -= 1;
-  }
-
+  const pipeline = [
+    {
+      $match: {
+        _id: new ObjectId(weekId),
+      },
+    },
+    ...populateTasksInDaysOfWeek,
+  ];
+  const weekData = await weeks.aggregate(pipeline).toArray();
   return {
     success: true,
     message: 'Total tasks completed updated successfully',
     code: '200',
-    week: weeklyTasks,
+    week: weekData[0],
   };
 }
