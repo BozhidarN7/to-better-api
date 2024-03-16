@@ -1,7 +1,8 @@
+import { ObjectId } from 'mongodb';
 import Task from './task';
 
 interface Week {
-  _id: string;
+  _id: ObjectId;
   totalTasks: number;
   tasksCompleted: number;
   sevenDaysPeriod: {

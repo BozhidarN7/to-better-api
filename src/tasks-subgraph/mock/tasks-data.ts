@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { Categories, Priorities } from '../enums';
 import { Task } from '../types';
 
@@ -36,7 +37,7 @@ const tasksState: Week[] = [
       thursday: [],
       friday: [
         {
-          _id: 'task1',
+          _id: new ObjectId(),
           title: 'Clean the dishes',
           description: 'All of them',
           category: Categories.Home,
@@ -46,7 +47,7 @@ const tasksState: Week[] = [
           weekId: 'week1',
         },
         {
-          _id: 'task2',
+          _id: new ObjectId(),
           title: 'Workout',
           description: 'Run 5 km',
           category: Categories.Outdoor,
@@ -56,7 +57,7 @@ const tasksState: Week[] = [
           weekId: 'week1',
         },
         {
-          _id: 'task3',
+          _id: new ObjectId(),
           title: 'Lear about React Native',
           description: 'Investigate native modules',
           category: Categories.Learning,
@@ -82,7 +83,7 @@ const tasksState: Week[] = [
       monday: [],
       tuesday: [
         {
-          _id: 'task1',
+          _id: new ObjectId(),
           title: 'Fix the doors',
           description:
             'Two of the doors have problems with the closing Two of the doors have problems with the closing',

@@ -1,8 +1,9 @@
+import { ObjectId } from 'mongodb';
 import { Categories, Priorities } from '../enums';
 import DayOfWeek from './day-of-week';
 
 interface Task {
-  _id: string;
+  _id: ObjectId;
   title: string;
   description: string;
   priority: Priorities;
