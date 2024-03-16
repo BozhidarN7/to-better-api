@@ -1,15 +1,25 @@
-import { tasksData } from '../mock';
-import { DayOfWeek } from '../types';
+import { Collection, ObjectId } from 'mongodb';
+import { DayOfWeek, Task, Week } from '../types';
 
-export default function deleteTask(
+export default async function deleteTask(
   _: undefined,
   { weekId, day, taskId }: { weekId: string; day: DayOfWeek; taskId: string },
+  { weeks, tasks }: { weeks: Collection<Week>; tasks: Collection<Task> },
 ) {
-  const weeklyTasks = tasksData.find(
-    (weeklyTasks) => weeklyTasks._id === weekId,
-  );
+  const dayToLowerCase = day.toLowerCase();
 
-  if (!weeklyTasks) {
+  const filter = { _id: new ObjectId(weekId) };
+  const update = {
+    $pull: {
+      [`tasks.${dayToLowerCase}`]: new ObjectId(taskId),
+    },
+    $inc: {
+      totalTasks: -1,
+    },
+  };
+  const updateStatus = await weeks.updateOne(filter, update);
+
+  if (updateStatus.modifiedCount === 0) {
     return {
       success: false,
       message: 'Week not found',
@@ -18,13 +28,10 @@ export default function deleteTask(
     };
   }
 
-  const dayToLowerCase = day.toLowerCase() as DayOfWeek;
+  const taskToDelete = await tasks.findOne({ _id: new ObjectId(taskId) });
+  const deleteStatus = await tasks.deleteOne({ _id: new ObjectId(taskId) });
 
-  const taskToDeleteIndex = weeklyTasks.tasks[dayToLowerCase].findIndex(
-    (task) => task._id === taskId,
-  );
-
-  if (taskToDeleteIndex === -1) {
+  if (deleteStatus.deletedCount === 0) {
     return {
       success: false,
       message: 'Task not found',
@@ -33,19 +40,10 @@ export default function deleteTask(
     };
   }
 
-  if (weeklyTasks.tasks[dayToLowerCase][taskToDeleteIndex].isCompleted) {
-    weeklyTasks.tasksCompleted -= 1;
-  }
-  weeklyTasks.totalTasks -= 1;
-  const deletedTask = weeklyTasks.tasks[dayToLowerCase].splice(
-    taskToDeleteIndex,
-    1,
-  );
-
   return {
     success: true,
     message: 'Task deleted successfully',
     code: '200',
-    task: deletedTask[0],
+    task: taskToDelete,
   };
 }
