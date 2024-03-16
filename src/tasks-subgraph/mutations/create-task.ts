@@ -31,7 +31,13 @@ export default async function createTask(
     };
   }
 
-  const newTask = { ...task, _id: newTaskId, isCompleted: false };
+  const newTask = {
+    ...task,
+    _id: newTaskId,
+    weekId,
+    dayOfWeek,
+    isCompleted: false,
+  };
   const insertResult = await tasks.insertOne(newTask);
 
   if (insertResult.insertedId) {

@@ -20,12 +20,7 @@ type Mutation {
     dayOfWeek: DayOfWeek!
     task: CreateTaskInput!
   ): CreateEditTaskMutationResponse!
-  editTask(
-    weekId: ID!
-    dayOfWeek: DayOfWeek!
-    taskId: ID!
-    task: EditTaskInput!
-  ): CreateEditTaskMutationResponse!
+  editTask(taskId: ID!, task: EditTaskInput!): CreateEditTaskMutationResponse!
   updateTotalTasksCompleted(
     weekId: ID!
     increase: Boolean

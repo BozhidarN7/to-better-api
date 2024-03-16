@@ -1,44 +1,30 @@
-import { tasksData } from '../mock';
-import { DayOfWeek, Task } from '../types';
+import { Collection, ObjectId } from 'mongodb';
+import { Task } from '../types';
 
-export default function editTask(
+export default async function editTask(
   _: undefined,
-  args: { weekId: string; dayOfWeek: DayOfWeek; taskId: string; task: Task },
+  args: { taskId: string; task: Task },
+  { tasks }: { tasks: Collection<Task> },
 ) {
-  const { task, weekId, taskId, dayOfWeek } = args;
-  const weeklyTasks = tasksData.find(
-    (weeklyTasks) => weeklyTasks._id === weekId,
-  );
+  const { task, taskId } = args;
 
-  if (!weeklyTasks) {
+  const filter = { _id: new ObjectId(taskId) };
+  const update = { $set: { ...task } };
+  const updateStatus = await tasks.updateOne(filter, update);
+
+  if (updateStatus.modifiedCount === 0) {
     return {
       success: false,
-      message: 'Week not found',
+      message: 'Unable to update task',
       code: '400',
       task: null,
     };
   }
-
-  const dayToLowerCase = dayOfWeek.toLowerCase() as DayOfWeek;
-
-  const taskToEditIndex = weeklyTasks.tasks[dayToLowerCase].findIndex(
-    (task: Task) => task._id === taskId,
-  );
-
-  if (taskToEditIndex === -1) {
-    return {
-      success: false,
-      message: 'Task not found',
-      code: '400',
-      task: null,
-    };
-  }
-
-  weeklyTasks.tasks[dayToLowerCase][taskToEditIndex] = task;
+  const updatedTask = await tasks.findOne({ _id: new ObjectId(taskId) });
   return {
     success: true,
     message: 'Task edited successfully',
     code: '200',
-    task: weeklyTasks.tasks[dayToLowerCase][taskToEditIndex],
+    task: updatedTask,
   };
 }
