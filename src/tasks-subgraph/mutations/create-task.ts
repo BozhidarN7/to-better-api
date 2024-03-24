@@ -8,13 +8,13 @@ export default async function createTask(
 ) {
   const { weekId, dayOfWeek, task } = args;
 
-  const dayToLowerCase = dayOfWeek.toLowerCase();
+  const dayToUpperCase = dayOfWeek.toUpperCase();
   const newTaskId = new ObjectId();
 
   const filter = { _id: new ObjectId(weekId) };
   const update = {
     $push: {
-      [`tasks.${dayToLowerCase}`]: newTaskId,
+      [`tasks.${dayToUpperCase}`]: newTaskId,
     },
     $inc: {
       totalTasks: 1,

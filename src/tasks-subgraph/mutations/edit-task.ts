@@ -15,7 +15,7 @@ export default async function editTask(
   if (updateStatus.modifiedCount === 0) {
     return {
       success: false,
-      message: 'Unable to update task',
+      message: 'Unable to update task. There was nothing to update',
       code: '400',
       task: null,
     };

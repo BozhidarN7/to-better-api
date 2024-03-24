@@ -6,12 +6,12 @@ export default async function deleteTask(
   { weekId, day, taskId }: { weekId: string; day: DayOfWeek; taskId: string },
   { weeks, tasks }: { weeks: Collection<Week>; tasks: Collection<Task> },
 ) {
-  const dayToLowerCase = day.toLowerCase();
+  const dayToUpperCase = day.toUpperCase();
 
   const filter = { _id: new ObjectId(weekId) };
   const update = {
     $pull: {
-      [`tasks.${dayToLowerCase}`]: new ObjectId(taskId),
+      [`tasks.${dayToUpperCase}`]: new ObjectId(taskId),
     },
     $inc: {
       totalTasks: -1,
