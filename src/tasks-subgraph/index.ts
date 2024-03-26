@@ -39,4 +39,5 @@ const { url } = await startStandaloneServer(server, {
   },
 });
 
+// eslint-disable-next-line no-console
 console.log(`🚀  Server ready at: ${url}`);
