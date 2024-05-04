@@ -7,6 +7,7 @@ interface Week {
   totalTasks: number;
   tasksCompleted: number;
   sevenDaysPeriod: SevenDaysPeriod;
+  isSelected: boolean;
   tasks: {
     monday: Task[];
     tuesday: Task[];

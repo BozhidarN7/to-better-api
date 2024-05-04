@@ -3,14 +3,20 @@ import { SevenDaysPeriod, Week } from '../types';
 
 export default async function getWeekBySevenDaysPeriod(
   _: undefined,
-  { sevenDaysPeriod }: { sevenDaysPeriod: SevenDaysPeriod },
+  {
+    sevenDaysPeriod,
+    isSelected,
+  }: { sevenDaysPeriod: SevenDaysPeriod; isSelected: boolean },
   { weeks }: { weeks: Collection<Week> },
 ) {
   const { startDate, endDate } = sevenDaysPeriod;
-  const week = await weeks.findOne({
-    'sevenDaysPeriod.startDate': startDate,
-    'sevenDaysPeriod.endDate': endDate,
-  });
+  const week = await weeks.findOneAndUpdate(
+    {
+      'sevenDaysPeriod.startDate': startDate,
+      'sevenDaysPeriod.endDate': endDate,
+    },
+    { $set: { isSelected: isSelected } },
+  );
 
   if (!week) {
     const newWeek = await weeks.insertOne({
@@ -21,6 +27,7 @@ export default async function getWeekBySevenDaysPeriod(
       },
       totalTasks: 0,
       tasksCompleted: 0,
+      isSelected: true,
       tasks: {
         monday: [],
         tuesday: [],
