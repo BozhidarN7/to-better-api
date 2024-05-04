@@ -7,6 +7,7 @@ extend schema
 type Query {
   weeks: [Week!]!
   week(weekId: ID!): Week
+  weeksBySevenDaysPeriod(sevenDaysPeriod: SevenDaysPeriodInput!): Week
 }
 
 type Mutation {
@@ -101,6 +102,11 @@ input EditTaskInput {
   priority: Priority
   category: Category
   isCompleted: Boolean
+}
+
+input SevenDaysPeriodInput {
+  startDate: String!
+  endDate: String!
 }
 
 enum Priority {

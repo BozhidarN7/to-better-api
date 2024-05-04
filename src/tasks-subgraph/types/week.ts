@@ -1,14 +1,12 @@
 import { ObjectId } from 'mongodb';
 import Task from './task';
+import SevenDaysPeriod from './seven-days-period';
 
 interface Week {
   _id: ObjectId;
   totalTasks: number;
   tasksCompleted: number;
-  sevenDaysPeriod: {
-    startDate: string;
-    endDate: string;
-  };
+  sevenDaysPeriod: SevenDaysPeriod;
   tasks: {
     monday: Task[];
     tuesday: Task[];
