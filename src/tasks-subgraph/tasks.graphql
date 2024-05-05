@@ -7,10 +7,6 @@ extend schema
 type Query {
   weeks: [Week!]!
   week(weekId: ID!): Week
-  weeksBySevenDaysPeriod(
-    sevenDaysPeriod: SevenDaysPeriodInput!
-    isSelected: Boolean!
-  ): Week
 }
 
 type Mutation {
@@ -25,10 +21,11 @@ type Mutation {
     task: CreateTaskInput!
   ): CreateEditTaskMutationResponse!
   editTask(taskId: ID!, task: EditTaskInput!): CreateEditTaskMutationResponse!
-  updateTotalTasksCompleted(
-    weekId: ID!
-    increase: Boolean
-  ): UpdateTotlaTasksCompletedResponse!
+  updateTotalTasksCompleted(weekId: ID!, increase: Boolean): UpdateWeekResponse!
+  selectWeekBySevenDaysPeriod(
+    sevenDaysPeriod: SevenDaysPeriodInput!
+    isSelected: Boolean!
+  ): UpdateWeekResponse
 }
 
 type Week {
@@ -75,7 +72,7 @@ type CreateEditTaskMutationResponse implements MutationResponse {
   task: Task
 }
 
-type UpdateTotlaTasksCompletedResponse implements MutationResponse {
+type UpdateWeekResponse implements MutationResponse {
   code: String!
   success: Boolean!
   message: String!
