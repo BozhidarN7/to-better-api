@@ -12,24 +12,19 @@ export default async function selectWeekBySevenDaysPeriod(
 ) {
   const { startDate, endDate } = sevenDaysPeriod;
 
-  const pipeline = [
+  const res = await weeks.findOneAndUpdate(
     {
-      $match: {
-        'sevenDaysPeriod.startDate': startDate,
-        'sevenDaysPeriod.endDate': endDate,
-      },
+      'sevenDaysPeriod.startDate': startDate,
+      'sevenDaysPeriod.endDate': endDate,
     },
     {
-      $addFields: {
+      $set: {
         isSelected: isSelected,
       },
     },
-    ...populateTasksInDaysOfWeek,
-  ];
+  );
 
-  const res = await weeks.aggregate(pipeline).toArray();
-
-  if (res.length === 0) {
+  if (!res) {
     const newWeek = await weeks.insertOne({
       _id: new ObjectId(),
       sevenDaysPeriod: {
@@ -60,10 +55,21 @@ export default async function selectWeekBySevenDaysPeriod(
     };
   }
 
+  const pipeline = [
+    {
+      $match: {
+        _id: res._id,
+      },
+    },
+    ...populateTasksInDaysOfWeek,
+  ];
+
+  const weekData = await weeks.aggregate(pipeline).toArray();
+
   return {
     code: '200',
     success: true,
     message: 'Week selected successfully',
-    week: res[0],
+    week: weekData[0],
   };
 }
