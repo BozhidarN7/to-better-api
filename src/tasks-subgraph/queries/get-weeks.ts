@@ -7,7 +7,14 @@ export default async function getWeeks(
   __: undefined,
   { weeks }: { weeks: Collection<Week> },
 ) {
-  const pipeline = [...populateTasksInDaysOfWeek];
+  const pipeline = [
+    {
+      $match: {
+        isSelected: true,
+      },
+    },
+    ...populateTasksInDaysOfWeek,
+  ];
   const weeksData = await weeks.aggregate(pipeline).toArray();
   return weeksData;
 }
