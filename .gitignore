@@ -44,3 +44,5 @@ packages/server/src/generated/packageVersion.ts
 
 # Lets you add more env vars.
 .env
+
+to-better-39f6f-firebase-adminsdk-6geek-32b23d678c.json
