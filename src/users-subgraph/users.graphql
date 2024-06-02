@@ -26,7 +26,7 @@ interface MutationResponse {
   message: String!
 }
 
-interface CreateUserMutationResponse implements MutationResponse {
+type CreateUserMutationResponse implements MutationResponse {
   code: String!
   success: Boolean!
   message: String!

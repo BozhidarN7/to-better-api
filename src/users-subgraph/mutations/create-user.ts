@@ -2,7 +2,6 @@ import { Collection } from 'mongodb';
 import { User } from '../types';
 import admin from '../firebase-config';
 import { FirebaseError } from 'firebase-admin/lib/utils/error';
-import { messaging } from 'firebase-admin';
 
 export default async function createUser(
   _: undefined,
@@ -23,7 +22,7 @@ export default async function createUser(
   const { email, password, photoUrl } = userData;
 
   try {
-    const response = await admin.auth().createUser({ email, password });
+    await admin.auth().createUser({ email, password });
   } catch (err) {
     if (
       (err as FirebaseError).message ===
@@ -45,10 +44,18 @@ export default async function createUser(
     }
   }
 
+  await users.insertOne({
+    email,
+    photoUrl: photoUrl,
+  });
+
   return {
     code: '200',
     message: 'User created successfullly',
     success: true,
-    user: {},
+    user: {
+      email,
+      photoUrl,
+    },
   };
 }
