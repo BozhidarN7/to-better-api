@@ -3,3 +3,32 @@ extend schema
     url: "https://specs.apollo.dev/federation/v2.0"
     import: ["@key", "@shareable"]
   )
+
+type Mutation {
+  createUser(userData: UserDataInput): CreateUserMutationResponse!
+}
+
+type User {
+  email: String!
+  password: String!
+  photoUrl: String!
+}
+
+input UserDataInput {
+  email: String
+  password: String
+  photoUrl: String
+}
+
+interface MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+}
+
+interface CreateUserMutationResponse implements MutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  user: User
+}
