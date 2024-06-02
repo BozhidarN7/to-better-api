@@ -11,7 +11,8 @@
     "lint:fix": "npm run lint -- --fix",
     "prettier:fix": "npx prettier . --write",
     "format": "npm run prettier:fix && npm run lint:fix",
-    "start": "npx tsx watch src/tasks-subgraph/index.ts",
+    "dev:tasks-subgraph": "npx tsx watch src/tasks-subgraph/index.ts",
+    "dev:users-subgraph": "npx tsx watch src/users-subgraph/index.ts",
     "supergraph:composition": "rover supergraph compose --config ./supergraph-config.yaml --output ./router/supergraph.graphql",
     "router:start": "npm run supergraph:composition && ./router/router --supergraph=./router/supergraph.graphql",
     "prepare": "husky"
